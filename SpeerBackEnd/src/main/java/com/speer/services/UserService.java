@@ -12,10 +12,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -36,11 +33,11 @@ public class UserService {
 
     // Post - Login Already Created User
     public String loginUser(LoginUserDto loginUserDto){
-        String token = ""; // need to be global, available for a createdUser throughout interaction
+        String token = "", encrypted_user_name = "";
         List<User> all_users = userRepository.findAll();
         for(User user : all_users){
             if(user.getUser_name().equals(loginUserDto.getUser_name()) && user.getPassword().equals(loginUserDto.getPassword())){
-                token = RandomStringUtils.randomAlphanumeric(20) + user.getUser_name() + "--"  + user.getPassword();
+                token = RandomStringUtils.randomAlphanumeric(20) + user.getUser_name();
                 user.setToken(token);
                 userRepository.save(user);
             }
@@ -136,24 +133,53 @@ public class UserService {
 
     // POST - Share a note of a user by given note_id, to another user given by user_id
     public Note shareNote(String token, Integer note_id, Integer user_id){
-        Note note = noteRepository.findById(note_id).orElseThrow(() -> new RuntimeException("Note not found")); // Note ID - 4
-        User user = userRepository.findById(user_id).orElseThrow(() -> new RuntimeException("User not Found")); // User ID - 2
+        User receiver = userRepository.findById(user_id).get();
+        Note original_note = noteRepository.findById(note_id).get();
+        Note shared_note = new Note();
 
+        shared_note.setNote_body(original_note.getNote_body());
+        shared_note.setUser(receiver);
+
+        noteRepository.save(shared_note);
+        return shared_note;
+    }
+
+    // GET - List<Notes> return notes with given keywords of a user
+    public List<Note> findNotesWithKeyWords(String token, String keyWords){
+        List<Note> found_notes = new ArrayList<>();
+
+        String user_name = extractUserNameFromToken(token.substring(20));
+        User user = findUserByUserName(user_name);
 
         List<Note> noteList = user.getNoteList();
-        note.setUser(user);
-        noteList.add(note);
-        userRepository.save(user);
-        return note;
+        for(Note note : noteList){
+            if(note.getNote_body().toLowerCase().contains(keyWords.toLowerCase())){
+                found_notes.add(note);
+            }
+        }
+        return found_notes;
     }
 
     public String extractUserNameFromToken(String token_processed){
         String userName = "";
-        int index_of_separator = token_processed.indexOf("--");
-        if(index_of_separator != -1){
-            userName = token_processed.substring(0, index_of_separator);
-        }
-        System.out.println(userName);
+        userName = token_processed.substring(0, token_processed.length());
         return userName;
+//        String userName = "";
+//        int index_of_separator = token_processed.indexOf("--");
+//        if(index_of_separator != -1){
+//            userName = token_processed.substring(0, index_of_separator);
+//        }
+//        System.out.println(userName);
+//        return userName;
+    }
+
+    public User findUserByUserName(String user_name){
+        List<User> all_users = userRepository.findAll();
+        for(User user : all_users){
+            if(user.getUser_name().equals(user_name)){
+                return user;
+            }
+        }
+        return null;
     }
 }

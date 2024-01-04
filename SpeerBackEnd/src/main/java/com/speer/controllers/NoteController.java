@@ -48,9 +48,15 @@ public class NoteController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @PostMapping("notes/id/share")
+    @PostMapping("/notes/id/share")
     public ResponseEntity<Note> shareNote(@RequestParam String token, @RequestParam Integer note_id, @RequestParam Integer user_id){
         Note note = userService.shareNote(token, note_id, user_id);
         return new ResponseEntity<Note>(note, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Note>> searchNotesWithKeywords(@RequestParam String token, @RequestParam String keywords){
+        List<Note> notesWithKeyWords = userService.findNotesWithKeyWords(token, keywords);
+        return new ResponseEntity<List<Note>>(notesWithKeyWords, HttpStatus.OK);
     }
 }
