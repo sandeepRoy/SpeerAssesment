@@ -19,7 +19,7 @@ public class User {
     @Column(name = "token")
     private String token;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Note> noteList;
 
     public User() {}
@@ -67,5 +67,16 @@ public class User {
 
     public void setNoteList(List<Note> noteList) {
         this.noteList = noteList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", noteList=" + noteList +
+                '}';
     }
 }

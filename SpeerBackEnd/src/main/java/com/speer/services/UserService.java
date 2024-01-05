@@ -8,6 +8,7 @@ import com.speer.entities.User;
 import com.speer.repositories.NoteRepository;
 import com.speer.repositories.UserRepository;
 import com.speer.responses.SharedNotesResponse;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,17 +119,8 @@ public class UserService {
 
     // DELETE - Delete note of a user by giveb note_id
     public User deleteNoteofUser(String token, Integer note_id){
-        User user_with_note = new User();
-        String user_name = extractUserNameFromToken(token.substring(20));
-        List<User> all = userRepository.findAll();
-        for(User user : all){
-            if(user.getUser_name().equals(user_name)){
-                Note note = noteRepository.findById(note_id).get();
-                noteRepository.delete(note);
-                user_with_note = userRepository.save(user);
-            }
-        }
-        return user_with_note;
+        noteRepository.deleteById(note_id);
+        return findUserByUserName(token.substring(20));
     }
 
     // POST - Share a note of a user by given note_id, to another user given by user_id
@@ -164,13 +156,6 @@ public class UserService {
         String userName = "";
         userName = token_processed.substring(0, token_processed.length());
         return userName;
-//        String userName = "";
-//        int index_of_separator = token_processed.indexOf("--");
-//        if(index_of_separator != -1){
-//            userName = token_processed.substring(0, index_of_separator);
-//        }
-//        System.out.println(userName);
-//        return userName;
     }
 
     public User findUserByUserName(String user_name){

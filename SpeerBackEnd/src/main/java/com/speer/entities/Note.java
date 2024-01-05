@@ -23,4 +23,13 @@ public class Note {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     User user;
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "note_id=" + note_id +
+                ", note_body='" + note_body + '\'' +
+                ", user=" + user.getUser_name() +
+                '}';
+    }
 }
