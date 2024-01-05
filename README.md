@@ -1,5 +1,12 @@
 # SpeerAssesment
 
+```
+Sandeep Roy
+Cell - +91-9178386506
+Email - sandeep.roy2014@gmail.com
+```
+## Requirement
+
 DUE DATE: 48 hours from when you start the assessment, however, if you require more time feel free to ask! Good luck!
 
 
@@ -90,10 +97,219 @@ Note
 3. Please run the tests from top to bottom
 ```
 
-Thank You!
 
-```
-Sandeep Roy
-Cell - 9178386506
-Email - sandeep.roy2014@gmail.com
-```
+
+## Usage
+
+1. Register a User
+
+   Request
+   ```
+   {
+       "user_name": "username",
+       "password": "password"
+   }
+   ```
+   Response
+   ```
+   {
+      "user_id": 8,
+      "user_name": "string",
+      "password": "string",
+      "token": null,
+      "noteList": null
+    }
+   ```
+2. Login a User
+   Request
+   ```
+   {
+       "user_name": "username",
+       "password": "password"
+   }
+   ```
+   Response
+   ```
+   {
+      "user_id": 8,
+      "user_name": "username",
+      "password": "password",
+      "token": Abcdefghijklmnopqrstusername ,
+      "noteList": null
+    }
+   ```
+
+3. Create Note for User
+      
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername"``` 
+
+      Request Body -
+      ```
+      {
+          "note_body": "string"
+      }
+      ```
+
+      Response
+      ```
+      {
+          "user_id": 9,
+          "user_name": "",
+          "password": "string",
+          "token": "string",
+          "noteList": [
+            {
+              "note_id": 1,
+              "note_body": "string"
+            }
+          ]
+      }
+      ```
+4. Create another Note for User
+      
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername"```
+
+      Request Body -
+      ```
+      {
+          "note_body": "string1"
+      }
+      ```
+
+      Response
+      ```
+      {
+          "user_id": 9,
+          "user_name": "",
+          "password": "string",
+          "token": "string",
+          "noteList": [
+           {
+              "note_id": 1,
+              "note_body": "string"
+           },  
+           {
+              "note_id": 2,
+              "note_body": "string1"
+            }
+          ]
+      }
+      ```
+
+5. See all notes of a user
+
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername"```
+
+      Response
+      ```
+      {
+          "user_id": 9,
+          "user_name": "",
+          "password": "string",
+          "token": "string",
+          "noteList": [
+            {
+              "note_id": 1,
+              "note_body": "string"
+            },
+            {
+              "note_id": 2,
+              "note_body": "string1"
+            }
+          ]
+      }
+      ```
+
+6. See a note with given note id
+
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername", note_id = 1```
+
+      Response
+      ```
+      {
+          "user_id": 9,
+          "user_name": "",
+          "password": "string",
+          "token": "string",
+          "noteList": [
+            {
+              "note_id": 1,
+              "note_body": "string"
+            }
+          ]
+      }
+      ```
+
+7. Update a note with given note id
+
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername", note_id = 1```
+      
+      Request Body -
+      ```
+      {
+          "note_body": "Updated String"
+      }
+      ```
+
+      Response
+      ```
+      {
+          "user_id": 9,
+          "user_name": "",
+          "password": "string",
+          "token": "string",
+          "noteList": [
+            {
+              "note_id": 1,
+              "note_body": "Updated String"
+            }
+          ]
+      }
+      ```
+
+8. Share a note with given note_id to another user with given user_id
+
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername", note_id = 1, user_id = 1```  
+
+      Response -
+      ```
+      {
+          "note_id": 1,
+          "note_body": "Updated String"
+      }
+
+      Requesting to check this in database, ** There should be another entry in notes table with notes body copied from given note_id and assigned to the new user.
+      Can also be verified by logging in again as with a another user. **
+      ```
+
+9. Search Notes as per keywords
+
+      Request Parameter - ```token = "Abcdefghijklmnopqrstusername", keyword = "string"```  
+
+      
+      ```
+      {
+          "note_id": 1,
+          "note_body": "Updated String"
+      }
+
+      Search using a combination of keywords can be verified in test.
+      
+      ```
+11. Delete notes by given note_id
+    
+        Request Parameter - ```token = "Abcdefghijklmnopqrstusername", note_id = "1"```
+
+        Response
+          ```
+          {
+              "user_id": 9,
+              "user_name": "",
+              "password": "string",
+              "token": "string",
+              "noteList": []
+          }
+          ```
+    
+
+        
