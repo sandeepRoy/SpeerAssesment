@@ -90,10 +90,7 @@ Note
 3. Please run the tests from top to bottom
 ```
 
-Thank You!
 
-```
-Sandeep Roy
-Cell - 9178386506
-Email - sandeep.roy2014@gmail.com
-```
+## Usage
+
+
