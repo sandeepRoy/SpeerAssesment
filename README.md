@@ -56,3 +56,44 @@ Your code will be evaluated on the following criteria:
     Quality: is the code well-organized, maintainable, and easy to understand?
     Completeness: does the code include unit, integration, and end-to-end tests for all endpoints?
     Search Functionality: does the code implement text indexing and search functionality to enable users to search for notes based on keywords?
+
+
+## Run Locally
+
+Clone the project using - ```https://github.com/sandeepRoy/SpeerAssesment.git```
+
+Create database schema with given sql file(speer.sql).
+Please make sure to create a blank schema named 'speer' before importing the sql file.
+
+To create the jar file, run inside the cloned folder
+ 
+```
+mvn clean install
+
+```
+Inside target folder, Run the jar file using
+
+```
+java -jar SpeerBackEnd-0.0.1-SNAPSHOT.jar
+
+```
+
+The swagger endpoint to test the APIs
+
+```http://localhost:8080/swagger-ui/index.html```
+
+Note
+
+```
+1. Search using keyword method in UserService, only checks for single keyword. 
+2. In UserServiceTest class we can search using combination of keywords(space separated).
+3. Please run the tests from top to bottom
+```
+
+Thank You!
+
+```
+Sandeep Roy
+Cell - 9178386506
+Email - sandeep.roy2014@gmail.com
+```
