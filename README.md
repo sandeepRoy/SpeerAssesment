@@ -1,4 +1,4 @@
-# Company ne chutiya kaata mera!!
+# Company ne chutiya kaat dia mera!!
 
 # SpeerAssesment
 
