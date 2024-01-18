@@ -1,5 +1,3 @@
-# Company ne chutiya kaat dia mera!!
-
 # SpeerAssesment
 
 ```
